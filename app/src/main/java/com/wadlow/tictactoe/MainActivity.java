@@ -6,25 +6,44 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.content.res.Configuration;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private TicTacToe game;
-    private GridAndButton tttView;
+    private ButtonGridAndTextView tttView;
+    public final static String MA = "MainActivity";
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_main );
         game = new TicTacToe( );
         Point size = new Point( );
         getWindowManager().getDefaultDisplay( ).getSize( size );
         int w = size.x / TicTacToe.SIDE;
         ButtonHandler bh = new ButtonHandler( );
-        tttView = new GridAndButton( this, w, TicTacToe.SIDE, bh );
+        tttView = new ButtonGridAndTextView( this, w, TicTacToe.SIDE, bh );
         tttView.setStatusText( game.result( ) );
         setContentView( tttView );
+    }
+
+    public void onConfigurationChanged(@NonNull Configuration newConfig ) {
+        super.onConfigurationChanged( newConfig );
+        Log.w( MA, "Height: " + newConfig.screenHeightDp );
+        Log.w( MA, "Width: " + newConfig.screenWidthDp );
+
+        Log.w( MA, "Orientation: " + newConfig.orientation );
+        if( newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE )
+            Log.w( MA, "Horizontal position" );
+        else if( newConfig.orientation == Configuration.ORIENTATION_PORTRAIT )
+            Log.w( MA, "Vertical position" );
+        else
+            Log.w( MA, "Undetermined position" );
     }
 
     public void showNewGameDialog( ) {

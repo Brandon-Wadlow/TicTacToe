@@ -1,4 +1,5 @@
 package com.wadlow.tictactoe;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -6,18 +7,20 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
-public class GridAndButton extends GridLayout {
+public class ButtonGridAndTextView extends GridLayout {
     private int side;
     private Button [][] buttons;
     private TextView status;
 
-    public GridAndButton( Context context, int width, int newSide,
+    public ButtonGridAndTextView( Context context, int width, int newSide,
                                   OnClickListener listener ) {
         super( context );
         side = newSide;
+        // Set # of rows and columns of this GridLayout
         setColumnCount( side );
         setRowCount( side + 1 );
 
+        // Create the buttons and add them to this GridLayout
         buttons = new Button[side][side];
         for( int row = 0; row < side; row++ ) {
             for( int col = 0; col < side; col++ ) {
@@ -28,6 +31,7 @@ public class GridAndButton extends GridLayout {
             }
         }
 
+        // set up layout parameters of 4th row of gridLayout
         status = new TextView( context );
         Spec rowSpec = GridLayout.spec( side, 1 );
         Spec columnSpec = GridLayout.spec( 0, side );
@@ -35,6 +39,7 @@ public class GridAndButton extends GridLayout {
                 = new LayoutParams( rowSpec, columnSpec );
         status.setLayoutParams( lpStatus );
 
+        // set up status' characteristics
         status.setWidth( side * width );
         status.setHeight( width );
         status.setGravity( Gravity.CENTER );
